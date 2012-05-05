@@ -93,7 +93,16 @@
 	</dependencies>
 
 	<build>
+		<!-- 默认的主代码目录 -->
+		<sourceDirectory>src</sourceDirectory>
+		<!-- 默认的测试代码目录 -->
+		<testSourceDirectory>test</testSourceDirectory>
+
 		<resources>
+			<resource>
+				<filtering>false</filtering>
+				<directory>resources</directory>
+			</resource>
 			<resource>
 				<filtering>false</filtering>
 				<directory>src</directory>
