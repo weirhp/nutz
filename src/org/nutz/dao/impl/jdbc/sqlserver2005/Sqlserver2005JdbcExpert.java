@@ -23,10 +23,10 @@ import org.nutz.dao.util.Pojos;
  */
 public class Sqlserver2005JdbcExpert extends AbstractJdbcExpert {
 
-	// private static String COMMENT_TABLE =
-	// "EXECUTE sp_updateextendedproperty N'Description', '$tableComment', N'user', N'dbo', N'table', N'$table', NULL, NULL";
+	 private static String COMMENT_TABLE =
+	 "EXECUTE sp_addextendedproperty N'MS_Description', '$tableComment', N'SCHEMA', N'dbo', N'table', N'$table', NULL, NULL";
 
-	private static String COMMENT_COLUMN = "EXECUTE sp_addextendedproperty N'Description', '$columnComment', N'user', N'dbo', N'table', N'$table', N'column', N'$column'";
+	private static String COMMENT_COLUMN = "EXECUTE sp_addextendedproperty N'MS_Description', '$columnComment', N'SCHEMA', N'dbo', N'table', N'$table', N'column', N'$column'";
 
 	public Sqlserver2005JdbcExpert(JdbcExpertConfigFile conf) {
 		super(conf);
@@ -88,9 +88,15 @@ public class Sqlserver2005JdbcExpert extends AbstractJdbcExpert {
 
 	private void addComment(Dao dao, Entity<?> en, String commentColumn) {
 		// TODO 表注释 SQLServer2005中貌似不行
+		List<Sql> sqls = new ArrayList<Sql>();
+		if (en.hasTableComment()) {
+			Sql tableCommentSQL = Sqls.create(COMMENT_TABLE);
+			tableCommentSQL.vars().set("table", en.getTableName())
+					.set("tableComment", en.getTableComment());
+			sqls.add(tableCommentSQL);
+		}
 		// 字段注释
 		if (en.hasColumnComment()) {
-			List<Sql> sqls = new ArrayList<Sql>();
 			for (MappingField mf : en.getMappingFields()) {
 				if (mf.hasColumnComment()) {
 					Sql columnCommentSQL = Sqls.create(commentColumn);
