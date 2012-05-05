@@ -23,7 +23,7 @@ import org.nutz.dao.util.Pojos;
  */
 public class Sqlserver2005JdbcExpert extends AbstractJdbcExpert {
 
-	 private static String COMMENT_TABLE =
+	private static String COMMENT_TABLE =
 	 "EXECUTE sp_addextendedproperty N'MS_Description', '$tableComment', N'SCHEMA', N'dbo', N'table', N'$table', NULL, NULL";
 
 	private static String COMMENT_COLUMN = "EXECUTE sp_addextendedproperty N'MS_Description', '$columnComment', N'SCHEMA', N'dbo', N'table', N'$table', N'column', N'$column'";
